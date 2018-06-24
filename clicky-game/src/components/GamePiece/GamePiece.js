@@ -3,7 +3,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import './GamePiece.css'
 
 const GamePiece = props => (
-    <FontAwesomeIcon icon={props.icon} onClick={props.clickHandler} />
+    <span onClick={() => props.clickHandler(props.icon.iconName)}>
+        <FontAwesomeIcon icon={props.icon}/>
+    </span>
 )
 
 export default GamePiece
