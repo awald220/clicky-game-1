@@ -5,7 +5,7 @@ import GamePiece from './components/GamePiece';
 
 class App extends Component {
     state = {
-        icons: [faSmile, faFrown, faBell, faCalendar, faEnvelope, faEnvelopeOpen, faNewspaper, faSnowflake, faBellSlash, faCompass, faEye, faFileAlt],
+        icons: [faSmile, faFrown, faBell, faCalendar, faEnvelope, faEnvelopeOpen, faNewspaper, faSnowflake, faBellSlash, faCompass, faEye, faFileAlt].sort(this.randomize),
         clicked: [],
         score: 0,
         highScore: 0
