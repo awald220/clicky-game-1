@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './App.css';
+import { Row, CardPanel, Col } from 'react-materialize';
 import { faSmile, faFrown, faBell, faCalendar, faEnvelope, faEnvelopeOpen, faNewspaper, faSnowflake, faBellSlash, faCompass, faEye, faFileAlt } from '@fortawesome/free-regular-svg-icons'
 import GamePiece from './components/GamePiece';
 
@@ -37,15 +37,28 @@ class App extends Component {
 
     render() {
         return (
-            <div className="App">
-                <header className="App-header">
-                    <h1 className="App-title">Clicky Game</h1>
-                    <h2>Score: {this.state.score}</h2>
-                    <h2>High Score: {this.state.highScore}</h2>
-                </header>
-                <p className="App-intro">
-                    {this.state.icons.map(icon => <GamePiece key={icon.iconName} icon={icon} clickHandler={this.clickHandler} />)}
-                </p>
+            <div>
+                <nav className="pinned">
+                    <div className="nav-wrapper">
+                        <span className="brand-logo">Clicky Game</span>
+                        <ul className="right">
+                            <li>Click an image to begin</li>
+                            <li>Score: {this.state.score} | High Score: {this.state.highScore}</li>
+                        </ul>
+                    </div>
+                </nav>
+                <div className="container">
+                    <Row>
+                        <Col s={12}>
+                            <CardPanel>
+                                <p>Click on an image to earn points, but don't click on any more than once!</p>
+                            </CardPanel>
+                        </Col>
+                    </Row>
+                    <Row>
+                        {this.state.icons.map(icon => <GamePiece key={icon.iconName} icon={icon} clickHandler={this.clickHandler} />)}
+                    </Row>
+                </div>
             </div>
         )
     }
