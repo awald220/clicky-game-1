@@ -8,7 +8,8 @@ class App extends Component {
         icons: [faSmile, faFrown, faBell, faCalendar, faEnvelope, faEnvelopeOpen, faNewspaper, faSnowflake, faBellSlash, faCompass, faEye, faFileAlt].sort(this.randomize),
         clicked: [],
         score: 0,
-        highScore: 0
+        highScore: 0,
+        shake: false
     }
 
     randomize = (a, b) => Math.random() > .5 ? -1 : 1
@@ -21,7 +22,8 @@ class App extends Component {
                 icons: this.state.icons.sort(this.randomize),
                 clicked: [...this.state.clicked, iconName],
                 score: score,
-                highScore: Math.max(this.state.highScore, score)
+                highScore: Math.max(this.state.highScore, score),
+                shake: false
             })
             if (score === this.state.icons.length) {
                 // game has been won
@@ -30,7 +32,8 @@ class App extends Component {
             this.setState({
                 icons: this.state.icons.sort(this.randomize),
                 clicked: [],
-                score: 0
+                score: 0,
+                shake: true
             })
         }
     }
@@ -56,7 +59,7 @@ class App extends Component {
                         </Col>
                     </Row>
                     <Row>
-                        {this.state.icons.map(icon => <GamePiece key={icon.iconName} icon={icon} clickHandler={this.clickHandler} />)}
+                        {this.state.icons.map(icon => <GamePiece shake={this.state.shake} key={icon.iconName} icon={icon} clickHandler={this.clickHandler} />)}
                     </Row>
                 </div>
             </div>

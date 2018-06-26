@@ -5,7 +5,7 @@ import './GamePiece.css'
 
 const GamePiece = props => (
     <Col s={12} m={3}>
-        <CardPanel onClick={() => props.clickHandler(props.icon.iconName)} className="hoverable teal lighten-4 black-text center">
+        <CardPanel onClick={() => props.clickHandler(props.icon.iconName)} className={"hoverable teal lighten-4 black-text center" + (props.shake ? " shake" : "")}>
             <FontAwesomeIcon icon={props.icon} />
         </CardPanel>
     </Col>
