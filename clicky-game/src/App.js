@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Row, CardPanel, Col } from 'react-materialize';
 import { faSmile, faFrown, faBell, faCalendar, faEnvelope, faEnvelopeOpen, faNewspaper, faSnowflake, faBellSlash, faCompass, faEye, faFileAlt } from '@fortawesome/free-regular-svg-icons'
 import GamePiece from './components/GamePiece';
+import Nav from './components/Nav/Nav';
 
 class App extends Component {
     state = {
@@ -9,7 +10,7 @@ class App extends Component {
         clicked: [],
         score: 0,
         highScore: 0,
-        shake: false
+        correct: undefined,
     }
 
     randomize = (a, b) => Math.random() > .5 ? -1 : 1
@@ -23,7 +24,7 @@ class App extends Component {
                 clicked: [...this.state.clicked, iconName],
                 score: score,
                 highScore: Math.max(this.state.highScore, score),
-                shake: false
+                correct: true
             })
             if (score === this.state.icons.length) {
                 // game has been won
@@ -33,7 +34,7 @@ class App extends Component {
                 icons: this.state.icons.sort(this.randomize),
                 clicked: [],
                 score: 0,
-                shake: true
+                correct: false
             })
         }
     }
@@ -41,16 +42,8 @@ class App extends Component {
     render() {
         return (
             <div>
-                <nav className="pinned">
-                    <div className="nav-wrapper">
-                        <span className="brand-logo">Clicky Game</span>
-                        <ul className="right">
-                            <li>Click an image to begin</li>
-                            <li>Score: {this.state.score} | High Score: {this.state.highScore}</li>
-                        </ul>
-                    </div>
-                </nav>
-                <div className="container">
+                <div className="container-fluid">
+                    <Nav correct={this.state.correct} score={this.state.score} highScore={this.state.highScore} />
                     <Row>
                         <Col s={12}>
                             <CardPanel>
@@ -58,8 +51,10 @@ class App extends Component {
                             </CardPanel>
                         </Col>
                     </Row>
+                </div>
+                <div className="container">
                     <Row>
-                        {this.state.icons.map(icon => <GamePiece shake={this.state.shake} key={icon.iconName} icon={icon} clickHandler={this.clickHandler} />)}
+                        {this.state.icons.map(icon => <GamePiece correct={this.state.correct} key={icon.iconName} icon={icon} clickHandler={this.clickHandler} />)}
                     </Row>
                 </div>
             </div>
@@ -67,4 +62,4 @@ class App extends Component {
     }
 }
 
-export default App;
+export default App
