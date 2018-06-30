@@ -11,30 +11,31 @@ class App extends Component {
         score: 0,
         highScore: 0,
         correct: undefined,
+        gameWon: false
     }
 
     randomize = (a, b) => Math.random() > .5 ? -1 : 1
 
     clickHandler = iconName => {
         if (this.state.clicked.indexOf(iconName) === -1) {
-            let score = this.state.score + 1
+            let score = this.state.clicked.length + 1,
+                clicked = score === this.state.icons.length ? [] : [...this.state.clicked, iconName]
 
             this.setState({
                 icons: this.state.icons.sort(this.randomize),
-                clicked: [...this.state.clicked, iconName],
+                clicked: clicked,
                 score: score,
                 highScore: Math.max(this.state.highScore, score),
-                correct: true
+                correct: true,
+                gameWon: score === this.state.icons.length
             })
-            if (score === this.state.icons.length) {
-                // game has been won
-            }
         } else {
             this.setState({
                 icons: this.state.icons.sort(this.randomize),
                 clicked: [],
                 score: 0,
-                correct: false
+                correct: false,
+                gameWon: false
             })
         }
     }
@@ -43,7 +44,7 @@ class App extends Component {
         return (
             <div>
                 <div className="container-fluid">
-                    <Nav correct={this.state.correct} score={this.state.score} highScore={this.state.highScore} />
+                    <Nav correct={this.state.correct} gameWon={this.state.gameWon} score={this.state.score} highScore={this.state.highScore} />
                     <Row>
                         <Col s={12}>
                             <CardPanel>

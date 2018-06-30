@@ -6,19 +6,22 @@ class Nav extends Component {
         window.clearTimeout(this.timeout)
     }
 
-    renderMessage(correct, clear = false) {
+    renderMessage(correct, gameWon, clear = false) {
         let message, className
-        if (correct === undefined) {
+        if(clear) {
+            className = ''
+        }
+        else if (correct === undefined) {
             message = 'Click an image to begin'
             className = ''
         } else {
-            message = correct ? 'You guessed correctly!' : 'You guessed incorrectly'
+            message = gameWon ? 'You won the game!!!' : (correct ? 'You guessed correctly!' : 'You guessed incorrectly')
             className = correct ? 'correct' : 'incorrect'
         }
 
-        if (!clear) {
-            window.clearTimeout(this.timeout)
-            this.timeout = window.setTimeout(this.renderMessage, [correct, true], 1000)
+        window.clearTimeout(this.timeout)
+        if (!clear & correct !== undefined) {
+            this.timeout = window.setTimeout(this.renderMessage, gameWon ? 3000 : 1000, gameWon ? undefined : correct, false, true)
         }
         return <li key={Math.random()} className={className}>{message}</li>
     }
@@ -29,7 +32,7 @@ class Nav extends Component {
                 <div>
                     <ul className="center navList">
                         <li className="logo">Clicky Game</li>
-                        {this.renderMessage(this.props.correct)}
+                        {this.renderMessage(this.props.correct, this.props.gameWon)}
                         <li>Score: {this.props.score} | High Score: {this.props.highScore}</li>
                     </ul>
                 </div>
